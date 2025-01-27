@@ -1,7 +1,7 @@
 import { Calendar, Filter } from "lucide-react"
 import { useState } from "react"
 import { MetricsGrid } from "./components/MetricsGrid";
-import { PerformanceMetrics, PortfolioData } from "./types";
+import { AssetAllocation, PerformanceMetrics, PortfolioData } from "./types";
 import { PortfolioChart } from "./components/PortfolioChart";
 import { createClient } from "@supabase/supabase-js";
 
@@ -18,6 +18,14 @@ const mockPortfolioData: PortfolioData[] = Array.from({ length: 30 }, (_, i) => 
   winRate: 0.6 + Math.random() * 0.2
 }));
 
+const mockAssetAllocation: AssetAllocation[] = [
+  { id: '1', assetClass: 'Stocks', percentage: 45, value: 45000 },
+  { id: '2', assetClass: 'Bonds', percentage: 25, value: 25000 },
+  { id: '3', assetClass: 'Crypto', percentage: 15, value: 15000 },
+  { id: '4', assetClass: 'Cash', percentage: 10, value: 10000 },
+  { id: '5', assetClass: 'Real Estate', percentage: 5, value: 5000 },
+];
+
 const mockMetrics: PerformanceMetrics = {
   roi: 0.156,
   cagr: 0.124,
@@ -29,6 +37,7 @@ function App() {
   const [dateRange, setDateRange] = useState('1M');
   const [metrics, setMetrics] = useState<PerformanceMetrics>(mockMetrics);
   const [porfolioData, setPortfolioData] = useState<PortfolioData[]>(mockPortfolioData);
+  const [assetAllocation, setAssetAllocation] = useState<AssetAllocation[]>(mockAssetAllocation);
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -67,6 +76,9 @@ function App() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
               <PortfolioChart data={porfolioData} />
+            </div>
+            <div>
+              <AssetAllocationChart data={assetAllocation} />
             </div>
           </div>
         </div>
