@@ -1,8 +1,22 @@
 import { Calendar, Filter } from "lucide-react"
 import { useState } from "react"
 import { MetricsGrid } from "./components/MetricsGrid";
-import { PerformanceMetrics } from "./types";
+import { PerformanceMetrics, PortfolioData } from "./types";
+import { PortfolioChart } from "./components/PortfolioChart";
+import { createClient } from "@supabase/supabase-js";
 
+const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_ANON_KEY
+);
+
+const mockPortfolioData: PortfolioData[] = Array.from({ length: 30 }, (_, i) => ({
+  id: `day-${i}`,
+  date: new Date(2024, 1, i + 1).toISOString(),
+  totalValue: 100000 + Math.random() * 50000,
+  dailyPnL: (Math.random() - 0.5) * 5000,
+  winRate: 0.6 + Math.random() * 0.2
+}));
 
 const mockMetrics: PerformanceMetrics = {
   roi: 0.156,
@@ -14,6 +28,7 @@ const mockMetrics: PerformanceMetrics = {
 function App() {
   const [dateRange, setDateRange] = useState('1M');
   const [metrics, setMetrics] = useState<PerformanceMetrics>(mockMetrics);
+  const [porfolioData, setPortfolioData] = useState<PortfolioData[]>(mockPortfolioData);
 
   return (
     <div className="min-h-screen bg-gray-100">
