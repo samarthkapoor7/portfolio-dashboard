@@ -4,6 +4,7 @@ import { MetricsGrid } from "./components/MetricsGrid";
 import { AssetAllocation, PerformanceMetrics, PortfolioData } from "./types";
 import { PortfolioChart } from "./components/PortfolioChart";
 import { createClient } from "@supabase/supabase-js";
+import { AssetAllocationChart } from "./components/AssetAllocationChart";
 
 const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL,
