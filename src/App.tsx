@@ -1,10 +1,11 @@
 import { Calendar, Filter } from "lucide-react"
 import { useState } from "react"
 import { MetricsGrid } from "./components/MetricsGrid";
-import { AssetAllocation, PerformanceMetrics, PortfolioData } from "./types";
+import { AssetAllocation, PerformanceMetrics, PortfolioData, Trade } from "./types";
 import { PortfolioChart } from "./components/PortfolioChart";
 import { createClient } from "@supabase/supabase-js";
 import { AssetAllocationChart } from "./components/AssetAllocationChart";
+import { RecentTrades } from "./components/RecentTrades";
 
 const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL,
@@ -27,6 +28,33 @@ const mockAssetAllocation: AssetAllocation[] = [
   { id: '5', assetClass: 'Real Estate', percentage: 5, value: 5000 },
 ];
 
+const mockTrades: Trade[] = [
+  {
+    id: '1',
+    date: '2024-02-28T10:00:00Z',
+    type: 'buy',
+    asset: 'AAPL',
+    amount: 10,
+    price: 175.84
+  },
+  {
+    id: '2',
+    date: '2024-02-27T15:30:00Z',
+    type: 'sell',
+    asset: 'TSLA',
+    amount: 5,
+    price: 202.64
+  },
+  {
+    id: '3',
+    date: '2024-02-26T09:15:00Z',
+    type: 'buy',
+    asset: 'MSFT',
+    amount: 8,
+    price: 415.26
+  }
+];
+
 const mockMetrics: PerformanceMetrics = {
   roi: 0.156,
   cagr: 0.124,
@@ -39,6 +67,7 @@ function App() {
   const [metrics, setMetrics] = useState<PerformanceMetrics>(mockMetrics);
   const [porfolioData, setPortfolioData] = useState<PortfolioData[]>(mockPortfolioData);
   const [assetAllocation, setAssetAllocation] = useState<AssetAllocation[]>(mockAssetAllocation);
+  const [trades, setTrades] = useState<Trade[]>(mockTrades);
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -82,6 +111,8 @@ function App() {
               <AssetAllocationChart data={assetAllocation} />
             </div>
           </div>
+
+          <RecentTrades trades={trades} />
         </div>
       </main>
     </div>
